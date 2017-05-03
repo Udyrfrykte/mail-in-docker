@@ -1,0 +1,88 @@
+version: '3'
+services:
+  postfix:
+    build: postfix/
+    ports:
+      - '25:25'
+      - '587:587'
+    volumes:
+      - <path to certificate chain file>:/certs/cert.pem:ro
+      - <path to certificate key file>:/certs/key.pem:ro
+    environment:
+      DOMAIN: <your domain>
+      USERS: |
+        foo
+        bar
+      ALIASES: |
+        foo.fooson@<your domain>    foo@<your domain>
+        .
+        .
+        .
+      # the $ symbol must be escaped with another $
+      ALIASES_REGEX: |
+        /^bar_.+@<your domain, escaped>$$/ foo@<your domain>
+        .
+        .
+        .
+  imap:
+    build: imap/
+    ports:
+      - '143:143'
+      - '993:993'
+    volumes:
+      - <path to certificate chain file>:/certs/cert.pem:ro
+      - <path to certificate key file>:/certs/key.pem:ro
+      - mailboxes:/var/mail/vmail/mailboxes
+    environment:
+      # you can generate passwords with 'doveadm pw'
+      # https://wiki.dovecot.org/Tools/Doveadm/Pw
+      # don't forget that the $ symbol must be escaped with another $
+      PASSWD_DB: |
+        foo@<your domain>:<password entry>
+        bar@<your domain>:<password entry>
+  lmtp:
+    build: lmtp/
+    volumes:
+      - mailboxes:/var/mail/vmail/mailboxes
+      - sieveboxes:/var/mail/vmail/sieveboxes
+    environment:
+      POSTMASTER_ADDRESS: postmaster@<your domain>
+  sasl:
+    build: sasl/
+    environment:
+      # you can generate passwords with 'doveadm pw'
+      # https://wiki.dovecot.org/Tools/Doveadm/Pw
+      # don't forget that the $ symbol must be escaped with another $
+      PASSWD_DB: |
+        foo@<your domain>:<password entry>
+        bar@<your domain>:<password entry>
+  sieve:
+    build: sieve/
+    ports:
+      - '4190:4190'
+    environment:
+      # you can generate passwords with 'doveadm pw'
+      # https://wiki.dovecot.org/Tools/Doveadm/Pw
+      # don't forget that the $ symbol must be escaped with another $
+      PASSWD_DB: |
+        foo@<your domain>:<password entry>
+        bar@<your domain>:<password entry>
+    volumes:
+      - <path to certificate chain file>:/certs/cert.pem:ro
+      - <path to certificate key file>:/certs/key.pem:ro
+      - sieveboxes:/var/mail/vmail/sieveboxes
+  opendkim:
+    build: opendkim/
+    volumes:
+      - ~/.ssl/opendkim/mail:/certs/key.pem:ro
+    environment:
+      DOMAIN: <your domain>
+  spamassassin:
+    build: spamassassin/
+  clamav:
+    build: clamav/
+  clamavmilter:
+    build: clamav-milter/
+volumes:
+  mailboxes:
+  sieveboxes:

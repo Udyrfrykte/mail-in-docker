@@ -1,0 +1,1 @@
+mail.{{ DOMAIN }} {{ DOMAIN }}:mail:/certs/key.pem
