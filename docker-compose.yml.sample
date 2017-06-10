@@ -34,7 +34,7 @@ services:
       - <path to certificate key file>:/certs/key.pem:ro
       - mailboxes:/var/mail/vmail/mailboxes
     environment:
-      # you can generate passwords with 'doveadm pw'
+      # you can generate passwords with 'doveadm pw' (or see doveadm-pw/README)
       # https://wiki.dovecot.org/Tools/Doveadm/Pw
       # don't forget that the $ symbol must be escaped with another $
       PASSWD_DB: |
@@ -50,7 +50,7 @@ services:
   sasl:
     build: sasl/
     environment:
-      # you can generate passwords with 'doveadm pw'
+      # you can generate passwords with 'doveadm pw' (or see doveadm-pw/README)
       # https://wiki.dovecot.org/Tools/Doveadm/Pw
       # don't forget that the $ symbol must be escaped with another $
       PASSWD_DB: |
@@ -61,7 +61,7 @@ services:
     ports:
       - '4190:4190'
     environment:
-      # you can generate passwords with 'doveadm pw'
+      # you can generate passwords with 'doveadm pw' (or see doveadm-pw/README)
       # https://wiki.dovecot.org/Tools/Doveadm/Pw
       # don't forget that the $ symbol must be escaped with another $
       PASSWD_DB: |
