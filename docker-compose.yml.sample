@@ -1,7 +1,7 @@
 version: '3'
 services:
-  postfix:
-    build: postfix/
+  smtp:
+    build: smtp/
     ports:
       - '25:25'
       - '587:587'
