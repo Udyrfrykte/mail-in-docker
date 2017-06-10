@@ -4,4 +4,5 @@ RUN apt-get update && \
     apt-get install -y dovecot-core && \
     rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["doveadm", "pw", "-s", "SHA512-CRYPT"]
+ENTRYPOINT ["doveadm", "pw"]
+CMD ["-s", "SHA512-CRYPT"]
