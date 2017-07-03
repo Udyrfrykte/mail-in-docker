@@ -22,6 +22,7 @@ pyzor_options --homedir /var/lib/spamassassin/.pyzor
 #   Add *****SPAM***** to the Subject header of spam e-mails
 #
 # rewrite_header Subject *****SPAM*****
+add_header all Report _REPORT_
 
 
 #   Save spam messages as a message/rfc822 MIME attachment instead of
