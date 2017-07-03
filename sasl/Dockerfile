@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update && \
-    apt-get install -y socat dovecot-core && \
+    apt-get install -y dovecot-core && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure Dovecot
