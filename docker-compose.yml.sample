@@ -5,6 +5,11 @@ services:
     ports:
       - '25:25'
       - '587:587'
+    depends_on:
+      - sasl
+      - spamassassin
+      - clamavmilter
+      - opendkim
     volumes:
       - <path to certificate chain file>:/certs/cert.pem:ro
       - <path to certificate key file>:/certs/key.pem:ro
@@ -83,6 +88,8 @@ services:
     build: clamav/
   clamavmilter:
     build: clamav-milter/
+    depends_on:
+      - clamav
 volumes:
   mailboxes:
   sieveboxes:

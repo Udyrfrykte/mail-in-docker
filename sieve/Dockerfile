@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update && \
-    apt-get install -y socat dovecot-core dovecot-managesieved && \
+    apt-get install -y dovecot-core dovecot-managesieved && \
     rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -g 5000 vmail

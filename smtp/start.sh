@@ -23,6 +23,8 @@ newaliases
 # generate user configuration
 echo "${USERS}" | sed "s/\(.*\)/\1@${DOMAIN} \1@${DOMAIN}/" >| /etc/postfix/virtual-mailbox-users
 
+rm -f /var/run/rsyslogd.pid
+
 # launch syslog
 rsyslogd
 # lauch postfix
