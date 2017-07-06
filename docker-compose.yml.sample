@@ -79,7 +79,7 @@ services:
   opendkim:
     build: opendkim/
     volumes:
-      - ~/.ssl/opendkim/mail:/certs/key.pem:ro
+      - <path to dkim private key file>:/certs/key.pem:ro
     environment:
       DOMAIN: <your domain>
   spamassassin:
