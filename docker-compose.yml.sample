@@ -31,6 +31,8 @@ services:
         .
   imap:
     build: imap/
+    depends_on:
+      - ldap
     ports:
       - '143:143'
       - '993:993'
@@ -39,12 +41,10 @@ services:
       - <path to certificate key file>:/certs/key.pem:ro
       - mailboxes:/var/mail/vmail/mailboxes
     environment:
-      # you can generate passwords with 'doveadm pw' (or see doveadm-pw/README)
-      # https://wiki.dovecot.org/Tools/Doveadm/Pw
-      # don't forget that the $ symbol must be escaped with another $
-      PASSWD_DB: |
-        foo@<your domain>:<password entry>
-        bar@<your domain>:<password entry>
+      # full DN template for users LDAP bind authentication
+      # you can use the variables provided by Dovecot
+      # see: https://wiki.dovecot.org/Variables
+      USER_DN_TEMPLATE: <DN template>
   lmtp:
     build: lmtp/
     volumes:
@@ -54,24 +54,33 @@ services:
       POSTMASTER_ADDRESS: postmaster@<your domain>
   sasl:
     build: sasl/
+    depends_on:
+      - ldap
     environment:
-      # you can generate passwords with 'doveadm pw' (or see doveadm-pw/README)
-      # https://wiki.dovecot.org/Tools/Doveadm/Pw
-      # don't forget that the $ symbol must be escaped with another $
-      PASSWD_DB: |
-        foo@<your domain>:<password entry>
-        bar@<your domain>:<password entry>
+      # full DN template for users LDAP bind authentication
+      # you can use the variables provided by Dovecot
+      # see: https://wiki.dovecot.org/Variables
+      USER_DN_TEMPLATE: <DN template>
+  ldap:
+    build: ldap/
+    # see image README for more information and configuration options
+    environment:
+      SLAPD_DOMAIN: <your domain>
+      SLAPD_PASSWORD: <your LDAP admin password>
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap
   sieve:
     build: sieve/
+    depends_on:
+      - ldap
     ports:
       - '4190:4190'
     environment:
-      # you can generate passwords with 'doveadm pw' (or see doveadm-pw/README)
-      # https://wiki.dovecot.org/Tools/Doveadm/Pw
-      # don't forget that the $ symbol must be escaped with another $
-      PASSWD_DB: |
-        foo@<your domain>:<password entry>
-        bar@<your domain>:<password entry>
+      # full DN template for users LDAP bind authentication
+      # you can use the variables provided by Dovecot
+      # see: https://wiki.dovecot.org/Variables
+      USER_DN_TEMPLATE: <DN template>
     volumes:
       - <path to certificate chain file>:/certs/cert.pem:ro
       - <path to certificate key file>:/certs/key.pem:ro
@@ -93,3 +102,5 @@ services:
 volumes:
   mailboxes:
   sieveboxes:
+  ldap_data:
+  ldap_config:
