@@ -1,0 +1,10 @@
+server_host = ldap
+
+bind = yes
+bind_dn = {{ BIND_DN }}
+bind_pw = {{ BIND_PW }}
+
+search_base = {{ USERS_SEARCH_BASE }}
+query_filter = (uid=%u)
+result_attribute = uid
+result_format = %s@%D

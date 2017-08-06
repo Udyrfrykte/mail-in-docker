@@ -2,8 +2,8 @@
 # compatibility_level=2
 
 ## These are all default Postfix settings that we won't change
-alias_maps = hash:/etc/aliases
-alias_database = hash:/etc/aliases
+alias_maps = texthash:/etc/aliases
+# alias_database = hash:/etc/aliases
 append_dot_mydomain = no
 biff = no
 broken_sasl_auth_clients = yes
@@ -62,9 +62,9 @@ smtpd_tls_session_cache_timeout = 3600s
 canonical_maps = texthash:/etc/postfix/canonical
 home_mailbox = Maildir/
 message_size_limit = 104857600
-virtual_alias_maps =  texthash:/etc/postfix/virtual-mailbox-users texthash:/etc/postfix/virtual-aliases regexp:/etc/postfix/virtual-aliases-re
+virtual_alias_maps =  ldap:/etc/postfix/ldap-users.cf ldap:/etc/postfix/ldap-aliases.cf regexp:/etc/postfix/virtual-aliases-re
 virtual_mailbox_domains = texthash:/etc/postfix/virtual-mailbox-domains
-virtual_mailbox_maps = texthash:/etc/postfix/virtual-mailbox-users
+virtual_mailbox_maps = ldap:/etc/postfix/ldap-users.cf
 virtual_transport = lmtp:inet:lmtp:24
 
 # necessary to ensure postfix will use /etc/hosts to resolve dovecot's name

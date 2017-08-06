@@ -15,15 +15,18 @@ services:
       - <path to certificate key file>:/certs/key.pem:ro
     environment:
       DOMAIN: <your domain>
-      USERS: |
-        foo
-        bar
-      ALIASES: |
-        foo.fooson@<your domain>    foo@<your domain>
-        .
-        .
-        .
+      BIND_DN: <DN for postfix to bind to the ldap service>
+      BIND_PW: <Password for this DN>
+      # Aliases are expected to be of the form :
+      # uid: <user part of the email (before @)>
+      USERS_SEARCH_BASE: <base DN for users search (ex: ou=Users,dc=example,dc=com)>
+      # Aliases are expected to be of the form :
+      # aliasedObjectName: <DN of the aliased user>
+      # uid: <alias username (before @)>
+      ALIASES_SEARCH_BASE: <base DN for aliases search (ex: ou=Aliases,dc=example,dc=com)>
       # the $ symbol must be escaped with another $
+      # to see what kind of rewriting can be done with regex aliases, see
+      # there http://www.postfix.org/regexp_table.5.html
       ALIASES_REGEX: |
         /^bar_.+@<your domain, escaped>$$/ foo@<your domain>
         .

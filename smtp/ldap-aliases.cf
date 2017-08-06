@@ -1,0 +1,12 @@
+server_host = ldap
+
+bind = yes
+bind_dn = {{ BIND_DN }}
+bind_pw = {{ BIND_PW }}
+
+search_base = {{ ALIASES_SEARCH_BASE }}
+query_filter = (uid=%u)
+result_attribute =
+special_result_attribute = aliasedObjectName
+leaf_result_attribute = uid
+result_format = %s@%D
