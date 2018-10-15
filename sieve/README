@@ -1,8 +1,0 @@
-Inspired by http://arstechnica.com/information-technology/2014/02/how-to-run-your-own-e-mail-server-with-your-own-domain-part-1/
-
-to create a password :
-
-doveadm pw -s SHA512-CRYPT (or see ../doveadm-pw/README)
-
-sa-learn --ham /path/to/your/inbox/on/the/server --progress
-sa-learn --spam /path/to/your/junk/on/the/server --progress
