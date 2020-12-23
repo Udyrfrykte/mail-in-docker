@@ -1,1 +1,1 @@
-root: postmaster@{{ DOMAIN }}
+root postmaster@{{ DOMAIN }}

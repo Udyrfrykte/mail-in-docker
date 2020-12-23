@@ -1,9 +1,11 @@
 server_host = ldap
+version = 3
 
 bind = yes
 bind_dn = {{ BIND_DN }}
 bind_pw = {{ BIND_PW }}
 
+domain = {{ DOMAIN }}
 search_base = {{ ALIASES_SEARCH_BASE }}
 query_filter = (uid=%u)
 result_attribute =

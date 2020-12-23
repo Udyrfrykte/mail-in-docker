@@ -1,1 +1,1 @@
-root@mail.{{ DOMAIN }} root.mail@{{ DOMAIN }}
+root@mail.{{ DOMAIN }} postmaster@{{ DOMAIN }}

@@ -24,9 +24,5 @@ for VARIABLE in "${parameters[@]}"; do
   sed -i "s#{{ $VARIABLE }}#${!VARIABLE}#g" /etc/postfix/ldap-aliases.cf
 done
 
-# launch rsyslog
-rm -f /var/run/rsyslogd.pid
-rsyslogd
-
 # launch postfix
-exec /usr/lib/postfix/sbin/master -d
+exec /usr/sbin/postfix start-fg
